@@ -1,7 +1,7 @@
 // src/services/authService.js
 
 export const signup = async (userData) => {
-    const response = await fetch("http://localhost:3001/signup", {
+    const response = await fetch("http://localhost:3001/auth/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -15,7 +15,7 @@ export const signup = async (userData) => {
   };
   
   export const login = async (loginData) => {
-    const response = await fetch("http://localhost:3001/login", {
+    const response = await fetch("http://localhost:3001/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

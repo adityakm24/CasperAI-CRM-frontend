@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signupUser, loginUser } from "../redux/authSlice";
 import { Link } from "react-router-dom";
-import { UserPlus, LogIn, Mail, Lock, User } from "lucide-react";
+import { UserPlus, LogIn, Mail, Lock, User, Phone } from "lucide-react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import casperLogo from "../assets/logo.png";
 
 const AuthComponent = ({ isLogin = true }) => {
@@ -12,11 +14,21 @@ const AuthComponent = ({ isLogin = true }) => {
     firstName: "",
     lastName: "",
     email: "",
+    phoneNumber1: "",
+    countryCode: "",
     password: "",
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handlePhoneChange = (phone, countryData) => {
+    setFormData({
+      ...formData,
+      phoneNumber1: `+${phone}`,
+      countryCode: countryData.countryCode.toUpperCase(),
+    });
   };
 
   const handleSubmit = (e) => {
@@ -70,6 +82,24 @@ const AuthComponent = ({ isLogin = true }) => {
                     />
                   </div>
                 </div>
+                <div className="relative">
+                  <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                  <PhoneInput
+                    country={"us"}
+                    value={formData.phoneNumber1}
+                    onChange={handlePhoneChange}
+                    inputStyle={{
+                      width: "380px",
+                      paddingLeft: "50px",
+                      height: "40px",
+                      backgroundColor: "#374151",
+                      borderColor: "#4b5563",
+                      color: "white",
+                    }}
+                    buttonStyle={{ backgroundColor: "#374151", borderColor: "#4b5563" }}
+                    placeholder="Phone number"
+                  />
+                </div>
               </>
             )}
             <div className="relative">
@@ -107,9 +137,13 @@ const AuthComponent = ({ isLogin = true }) => {
               disabled={loading}
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                {isLogin ? <LogIn className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" /> : <UserPlus className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" />}
+                {isLogin ? (
+                  <LogIn className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" />
+                ) : (
+                  <UserPlus className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" />
+                )}
               </span>
-              {loading ? "Processing..." : (isLogin ? "Sign in" : "Sign up")}
+              {loading ? "Processing..." : isLogin ? "Sign in" : "Sign up"}
             </button>
           </div>
         </form>
