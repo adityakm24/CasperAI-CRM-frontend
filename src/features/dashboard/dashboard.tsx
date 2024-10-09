@@ -1,10 +1,12 @@
+import React from "react";
+import Home from "../../layouts/home";
 
-const DashboardPage = () => {
-    return (
-        <div className="flex justify-center items-center h-screen bg-gray-100">
-            <h1 className="text-3xl font-bold">Dashboard</h1>
-        </div>
-    );
+const Dashboard: React.FC = () => {
+  return (
+    <div>
+      <Home />
+    </div>
+  );
 };
 
-export default DashboardPage;
+export default Dashboard;
