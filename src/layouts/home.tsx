@@ -1,27 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 
-const Home: React.FC = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+interface HomeProps {
+  children: React.ReactNode; // This will allow the Home component to render children
+}
 
+const Home: React.FC<HomeProps> = ({ children }) => {
   return (
-    <div className="flex flex-col h-screen">
-      {/* Top Navbar */}
+    <div className="h-screen flex flex-col">
+      {/* Navbar */}
       <Navbar />
 
-      {/* Main Content */}
+      {/* Main Layout with Sidebar and Content */}
       <div className="flex flex-1">
         {/* Sidebar */}
-        <Sidebar
-          isCollapsed={isCollapsed}
-          onToggleSidebar={() => setIsCollapsed(!isCollapsed)}
-        />
+        <Sidebar />
 
-        {/* Page content */}
-        <div className="flex-1 p-4">
-          <h1 className="text-2xl font-bold">Welcome to the Dashboard</h1>
-          <p>This is your main content area. Customize it as needed.</p>
+        {/* Main Content */}
+        <div className="flex-1 bg-[#2c2c2c] overflow-auto p-4">
+          {children} 
         </div>
       </div>
     </div>

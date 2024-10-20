@@ -1,92 +1,116 @@
-import React from "react";
-import { FiHome, FiUsers, FiX, FiLogOut } from "react-icons/fi";
+import React, { useState } from "react";
 
-interface SidebarProps {
-  isCollapsed: boolean;
-  onToggleSidebar: () => void;
-}
+const SideNavbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false); 
+  const [isExpanded, setIsExpanded] = useState(false); 
+  const [activeSection, setActiveSection] = useState("Dashboard"); 
 
-const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggleSidebar }) => {
+  const handleSectionClick = (section: string) => {
+    setActiveSection(section); 
+    if (section === "Dashboard") {
+      setIsOpen(!isOpen); 
+    }
+  };
+
   return (
     <div
-      className={`bg-[#222222] h-full p-4 ${
-        isCollapsed ? "w-20" : "w-64"
-      } transition-all duration-300 flex flex-col justify-between`}
+      className={`bg-[#212121] flex flex-col transition-all duration-300 ease-in-out ${
+        isExpanded ? "w-60" : "w-20"
+      }`}
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
     >
-      <div className="flex flex-col">
-        {/* Close button aligned to the top-right */}
-        <div className="flex justify-center mb-8">
-          <button
-            onClick={onToggleSidebar}
-            className="flex items-center justify-center"
-          >
-            {isCollapsed ? (
-              <div className="grid grid-cols-3 gap-2 w-8 h-8">
-                {/* Adjusted grid size for 9 dots */}
-                {[...Array(9)].map((_, index) => (
-                  <div
-                    key={index}
-                    className="w-1 h-1 bg-white transform rotate-45"
-                  ></div>
-                ))}
-              </div>
-            ) : (
-              <FiX className="text-xl text-white" />
-            )}
-          </button>
+      <div className="flex flex-col flex-1">
+        <div
+          className={`group w-full flex items-center justify-between p-3 rounded-md pl-5 cursor-pointer transition duration-300 ease-in-out ${
+              activeSection === "Dashboard" ? "bg-[#9B9999] w-10 h-10 flex item-center justify-center" : "hover:bg-[#393937] "
+          }`}
+          onClick={() => handleSectionClick("Dashboard")}
+        >
+          <div className="flex items-center space-x-2">
+            <img src="src/assets/home-2.svg" alt="Home" className="w-6 h-6" />
+            <span
+              className={`text-white ${
+                isExpanded ? "opacity-100" : "opacity-0"
+              } group-hover:opacity-100 transition-opacity duration-300 ease-in-out`}
+            >
+              Dashboard
+            </span>
+          </div>
+          {isExpanded && (
+            <img
+              src="src/assets/angle down.svg"
+              alt="Dropdown"
+              className="w-4 h-4"
+            />
+          )}
         </div>
 
-        {/* Sidebar menu items */}
-        <ul className="flex flex-col items-center space-y-4 text-white">
-          {/* Highlight active dashboard */}
-          <li
-            className={`flex items-center justify-center w-full p-2 rounded-md cursor-pointer ${
-              !isCollapsed && "bg-gray-700"
+        {isOpen && (
+          <div
+            className={`ml-8 flex flex-col space-y-2 transition-all ${
+              isExpanded ? "ml-8" : "items-center justify-center"
             }`}
           >
-            <FiHome className="text-xl" /> {/* Moderately bigger home icon */}
-            {!isCollapsed && (
-              <span className="ml-2 text-sm font-semibold">Dashboard</span>
-            )}
-          </li>
-          <li className="flex items-center justify-center w-full p-2 rounded-md hover:bg-gray-700 cursor-pointer">
-            <FiUsers className="text-xl" /> {/* Moderately bigger users icon */}
-            {!isCollapsed && <span className="ml-2 text-sm">Leads</span>}
-          </li>
-        </ul>
-      </div>
-
-      {/* Bottom section: Logout button and Profile */}
-      <div className="flex flex-col items-center w-full">
-        {/* Logout Button (Hidden when collapsed) */}
-        {!isCollapsed && (
-          <button className="w-full mb-4 flex items-center justify-center p-2 text-white rounded-lg bg-red-600 hover:bg-red-700">
-            <FiLogOut className="text-sm" /> {/* Smaller logout icon */}
-            <span className="ml-2 text-sm">Logout</span>
-          </button>
+            <div
+              className={`group w-full flex ${
+                isExpanded ? "items-center space-x-2" : "justify-center"
+              } p-2 rounded-md cursor-pointer transition duration-300 ease-in-out ${
+                activeSection === "Leads" ? "bg-[#9B9999]" : "hover:bg-[#393937]"
+              }`}
+              onClick={() => handleSectionClick("Leads")} 
+            >
+              <img
+                src="src/assets/leads.svg"
+                alt="Leads"
+                className="w-5 h-5"
+              />
+              <span
+                className={`text-white ml-2 ${
+                  isExpanded ? "opacity-100" : "opacity-0"
+                } group-hover:opacity-100 transition-opacity duration-300 ease-in-out`}
+              >
+                Leads
+              </span>
+            </div>
+          </div>
         )}
 
-        {/* Profile circle with email */}
         <div
-          className={`flex items-center justify-center p-2 ${
-            !isCollapsed && "hover:bg-gray-700"
-          } rounded-lg w-full`}
+          className={`group w-full flex items-center p-3 pl-5 rounded-md cursor-pointer transition duration-300 ease-in-out ${
+            activeSection === "Assistants" ? "bg-[#9B9999]" : "hover:bg-[#393937]"
+          }`}
+          onClick={() => handleSectionClick("Assistants")} 
         >
-          <div className="flex items-center w-full">
-            {/* Profile icon with consistent background color */}
-            <div className="bg-[#D9D9D9] rounded-full flex items-center justify-center w-6 h-6 text-black">
-              S
-            </div>
-            {!isCollapsed && (
-              <span className="ml-2 text-xs text-white">
-                sowrabhmitoshi@gmail.com
-              </span>
-            )}
-          </div>
+          <img
+            src="src/assets/people.svg"
+            alt="Assistants"
+            className="w-6 h-6"
+          />
+          <span
+            className={`text-white ml-2 ${
+              isExpanded ? "opacity-100" : "opacity-0"
+            } group-hover:opacity-100 transition-opacity duration-300 ease-in-out`}
+          >
+            Assistants
+          </span>
         </div>
+      </div>
+
+      <div className="w-full p-3 bg-[#393937] rounded-md flex items-center">
+        <div className="rounded-full bg-gray-500 text-white w-8 h-8 flex items-center justify-center">
+          S
+        </div>
+        <span
+          className={`text-white ml-2 ${
+            isExpanded ? "opacity-100" : "opacity-0"
+          } transition-opacity duration-300 ease-in-out`}
+        >
+          sowrabhmitoshi@gmail.com
+        </span>
       </div>
     </div>
   );
 };
 
-export default Sidebar;
+export default SideNavbar;

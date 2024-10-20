@@ -110,7 +110,6 @@ const AuthForm: React.FC<{ isLogin?: boolean }> = ({ isLogin = true }) => {
                 await dispatch(signupUser(formattedValues as any)).unwrap(); 
                 dispatch(openSnackbar({ message: 'Signed up successfully! Please verify your OTP.', type: 'success' }));
                 
-                // Redirect to OTP verification page after signup
                 navigate(`/verify-otp?email=${formValues.email}`);
             }
         } catch (error) {
