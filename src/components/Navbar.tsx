@@ -2,7 +2,7 @@ import React from "react";
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="bg-[#393937] h-16 p-1 text-white flex items-center justify-between">
+    <nav className="bg-[#2671B7] h-16 p-1 text-white flex items-center justify-between">
       <div className="ml-1 flex items-center">
         <div className="rounded-full p-2 ">
           <img
