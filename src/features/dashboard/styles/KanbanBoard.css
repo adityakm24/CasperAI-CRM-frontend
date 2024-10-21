@@ -1,0 +1,190 @@
+.kanban-board-container {
+    padding: 20px;
+}
+
+.kanban-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Ensure 3 equal columns */
+    gap: 20px;
+}
+
+.kanban-column {
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.kanban-column h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.kanban-column p {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.kanban-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.kanban-card:hover {
+    transform: translateY(-5px);
+}
+
+.kanban-card h4 {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #2a2a2a;
+}
+
+.kanban-card p {
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.add-lead-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-lead-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-5px);
+}
+
+/* AddLeadForm Modal Styles */
+.add-lead-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it stays on top */
+    padding: 20px;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%; /* Make it responsive */
+    max-width: 400px; /* Set a maximum width */
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.btn-add {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.btn-cancel {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 10px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .kanban-board {
+        grid-template-columns: 1fr; /* Stack columns on mobile */
+    }
+
+    .kanban-column {
+        margin-bottom: 20px; /* Add spacing between stacked columns */
+    }
+
+    .modal-content {
+        padding: 15px;
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .form-input {
+        padding: 8px;
+    }
+
+    .btn-add, .btn-cancel {
+        padding: 8px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 10px;
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .form-input {
+        padding: 8px;
+    }
+
+    .btn-add, .btn-cancel {
+        padding: 8px 10px;
+    }
+}
