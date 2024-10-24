@@ -1,10 +1,23 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import AddLeadForm from "./AddLeadForm";
+import KanbanColumn from "./KanbanColumn";
 import "../styles/KanbanBoard.css";
 
-const KanbanBoard = () => {
-  const leads = useSelector(
+interface Lead {
+  id: string;
+  name: string;
+  phoneNumber: string;
+}
+
+interface LeadsState {
+  fresh: Lead[];
+  notSerious: Lead[];
+  serious: Lead[];
+}
+
+const KanbanBoard: React.FC = () => {
+  const leads: LeadsState = useSelector(
     (state: any) =>
       state.dashboardLeads || { fresh: [], notSerious: [], serious: [] }
   );
@@ -24,49 +37,13 @@ const KanbanBoard = () => {
 
       <div className="kanban-board">
         {/* Fresh Leads Column */}
-        <div className="kanban-column">
-          <h2>Fresh Leads ({leads.fresh.length})</h2>
-          {leads.fresh.length > 0 ? (
-            leads.fresh.map((lead: any) => (
-              <div className="kanban-card" key={lead.id}>
-                <h4>{lead.name}</h4>
-                <p>{lead.phoneNumber}</p>
-              </div>
-            ))
-          ) : (
-            <p>No fresh leads available</p>
-          )}
-        </div>
+        <KanbanColumn title="Fresh Leads" leads={leads.fresh} />
 
         {/* Not-Serious Leads Column */}
-        <div className="kanban-column">
-          <h2>Not-Serious Leads ({leads.notSerious.length})</h2>
-          {leads.notSerious.length > 0 ? (
-            leads.notSerious.map((lead: any) => (
-              <div className="kanban-card" key={lead.id}>
-                <h4>{lead.name}</h4>
-                <p>{lead.phoneNumber}</p>
-              </div>
-            ))
-          ) : (
-            <p>No Not-Serious leads available</p>
-          )}
-        </div>
+        <KanbanColumn title="Not-Serious Leads" leads={leads.notSerious} />
 
         {/* Serious Leads Column */}
-        <div className="kanban-column">
-          <h2>Serious Leads ({leads.serious.length})</h2>
-          {leads.serious.length > 0 ? (
-            leads.serious.map((lead: any) => (
-              <div className="kanban-card" key={lead.id}>
-                <h4>{lead.name}</h4>
-                <p>{lead.phoneNumber}</p>
-              </div>
-            ))
-          ) : (
-            <p>No Serious leads available</p>
-          )}
-        </div>
+        <KanbanColumn title="Serious Leads" leads={leads.serious} />
       </div>
 
       {/* Render the Add Lead Form if isFormOpen is true */}

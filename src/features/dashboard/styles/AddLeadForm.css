@@ -1,0 +1,204 @@
+/* General Modal Styles */
+.add-lead-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Soft backdrop */
+  z-index: 1000;
+  backdrop-filter: blur(10px); /* Blurring the background for a premium look */
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  padding: 40px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Header Styling */
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  letter-spacing: 0.5px;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Input Labels */
+.form-group label {
+  display: block;
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #555;
+  letter-spacing: 0.3px;
+}
+
+/* Form Input */
+.form-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #333;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.form-input:focus {
+  border-color: #007aff;
+  background-color: #fff;
+  outline: none;
+  box-shadow: 0 4px 10px rgba(0, 122, 255, 0.1); /* Soft blue glow on focus */
+}
+
+/* Button Group */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+/* Add Button */
+.btn-add {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-right: 10px;
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0, 122, 255, 0.2); /* Elevated look */
+}
+
+.btn-add:hover {
+  background-color: #005fcc;
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.btn-add:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Cancel Button */
+.btn-cancel {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: transparent;
+  color: #007aff;
+  border: 2px solid #007aff;
+  border-radius: 8px;
+  transition: border-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-cancel:hover {
+  color: #005fcc;
+  border-color: #005fcc;
+}
+
+/* Error Message Styling */
+.error-message {
+  color: #ff3b30; /* Bright red error color */
+  font-size: 14px;
+  text-align: center;
+  margin-top: 10px;
+  background-color: #ffe6e6;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+/* Add subtle input transition on hover */
+.form-input:hover {
+  background-color: #f1f1f1;
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+  .modal-content {
+    padding: 20px;
+    width: 95%;
+  }
+  .form-input {
+    font-size: 14px;
+    padding: 10px;
+  }
+  .btn-add, .btn-cancel {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .modal-content {
+    background-color: #1e1e1e;
+    color: #fefefe;
+  }
+  .form-input {
+    background-color: #333;
+    color: #ddd;
+    border-color: #444;
+  }
+  .form-input:focus {
+    border-color: #00aaff;
+    box-shadow: 0 4px 10px rgba(0, 170, 255, 0.2);
+  }
+  .btn-add {
+    background-color: #00aaff;
+    box-shadow: 0 8px 16px rgba(0, 170, 255, 0.2);
+  }
+  .btn-add:hover {
+    background-color: #008bcc;
+  }
+  .btn-cancel {
+    border-color: #00aaff;
+    color: #00aaff;
+  }
+  .btn-cancel:hover {
+    border-color: #008bcc;
+    color: #008bcc;
+  }
+  .error-message {
+    background-color: #ff6666;
+  }
+}

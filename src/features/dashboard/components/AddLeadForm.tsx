@@ -1,15 +1,28 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addLead } from "../redux/leadSlice"; // Import the addLead action
+import { useDispatch, useSelector } from "react-redux";
+import { addLeadThunk } from "../redux/leadSlice"; // Import the thunk
+import { RootState } from "../../../redux/store"; // Import RootState if you're using TypeScript
+import "../styles/AddLeadForm.css"; 
 
 const AddLeadForm = ({ onClose }: { onClose: () => void }) => {
   const [leadData, setLeadData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     phoneNumber: "",
     status: "fresh",
+    notes: "Interested in property",
+    propertyInterest: "Residential",
+    tag: "serious",
   });
-  const [error, setError] = useState("");
+
   const dispatch = useDispatch();
+
+  // Select loading and error from the Redux store
+  // Make sure 'dashboardLeads' is the key under which your leads reducer is stored in the global store
+  const loading = useSelector(
+    (state: RootState) => state.dashboardLeads.loading
+  );
+  const error = useSelector((state: RootState) => state.dashboardLeads.error);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLeadData({ ...leadData, [e.target.name]: e.target.value });
@@ -17,15 +30,9 @@ const AddLeadForm = ({ onClose }: { onClose: () => void }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!leadData.name || !leadData.phoneNumber) {
-      setError("All fields are required");
-      return;
-    }
 
-    // Dispatch the action to add lead
-    dispatch(addLead(leadData));
-
-    console.log("Lead added: ", leadData); // Check if this is printed with the right data
+    // Dispatch the thunk to add lead
+    dispatch(addLeadThunk(leadData));
 
     onClose(); // Close the form after adding the lead
   };
@@ -37,11 +44,21 @@ const AddLeadForm = ({ onClose }: { onClose: () => void }) => {
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Name</label>
+            <label>First Name</label>
             <input
               type="text"
-              name="name"
-              value={leadData.name}
+              name="firstName"
+              value={leadData.firstName}
+              onChange={handleInputChange}
+              className="form-input"
+            />
+          </div>
+          <div className="form-group">
+            <label>Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              value={leadData.lastName}
               onChange={handleInputChange}
               className="form-input"
             />
@@ -57,8 +74,8 @@ const AddLeadForm = ({ onClose }: { onClose: () => void }) => {
             />
           </div>
           <div className="button-group">
-            <button type="submit" className="btn-add">
-              Add Lead
+            <button type="submit" className="btn-add" disabled={loading}>
+              {loading ? "Adding Lead..." : "Add Lead"}
             </button>
             <button type="button" onClick={onClose} className="btn-cancel">
               Cancel

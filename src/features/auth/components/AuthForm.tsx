@@ -98,7 +98,6 @@ const AuthForm: React.FC<{ isLogin?: boolean }> = ({ isLogin = true }) => {
                 })
             };
     
-            console.log('Submitting form with values:', formattedValues);  
     
             await Yup.object(validationSchema).validate(formValues, { abortEarly: false });
             if (isLogin) {
