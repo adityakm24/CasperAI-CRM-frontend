@@ -1,14 +1,15 @@
 import React, { useState } from "react";
+import CircleAvatar from "./CircleAvatar";
 
 const SideNavbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false); 
-  const [isExpanded, setIsExpanded] = useState(false); 
-  const [activeSection, setActiveSection] = useState("Dashboard"); 
+  const [isOpen, setIsOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [activeSection, setActiveSection] = useState("Dashboard");
 
   const handleSectionClick = (section: string) => {
-    setActiveSection(section); 
+    setActiveSection(section);
     if (section === "Dashboard") {
-      setIsOpen(!isOpen); 
+      setIsOpen(!isOpen);
     }
   };
 
@@ -23,7 +24,9 @@ const SideNavbar: React.FC = () => {
       <div className="flex flex-col flex-1">
         <div
           className={`group w-full flex items-center justify-between p-3 rounded-md pl-5 cursor-pointer transition duration-300 ease-in-out ${
-              activeSection === "Dashboard" ? "bg-[#9B9999] w-10 h-10 flex item-center justify-center" : "hover:bg-[#393937] "
+            activeSection === "Dashboard"
+              ? "bg-[#9B9999] w-10 h-10 flex item-center justify-center"
+              : "hover:bg-[#393937] "
           }`}
           onClick={() => handleSectionClick("Dashboard")}
         >
@@ -56,15 +59,13 @@ const SideNavbar: React.FC = () => {
               className={`group w-full flex ${
                 isExpanded ? "items-center space-x-2" : "justify-center"
               } p-2 rounded-md cursor-pointer transition duration-300 ease-in-out ${
-                activeSection === "Leads" ? "bg-[#9B9999]" : "hover:bg-[#393937]"
+                activeSection === "Leads"
+                  ? "bg-[#9B9999]"
+                  : "hover:bg-[#393937]"
               }`}
-              onClick={() => handleSectionClick("Leads")} 
+              onClick={() => handleSectionClick("Leads")}
             >
-              <img
-                src="src/assets/leads.svg"
-                alt="Leads"
-                className="w-5 h-5"
-              />
+              <img src="src/assets/leads.svg" alt="Leads" className="w-5 h-5" />
               <span
                 className={`text-white ml-2 ${
                   isExpanded ? "opacity-100" : "opacity-0"
@@ -78,9 +79,11 @@ const SideNavbar: React.FC = () => {
 
         <div
           className={`group w-full flex items-center p-3 pl-5 rounded-md cursor-pointer transition duration-300 ease-in-out ${
-            activeSection === "Assistants" ? "bg-[#9B9999]" : "hover:bg-[#393937]"
+            activeSection === "Assistants"
+              ? "bg-[#9B9999]"
+              : "hover:bg-[#393937]"
           }`}
-          onClick={() => handleSectionClick("Assistants")} 
+          onClick={() => handleSectionClick("Assistants")}
         >
           <img
             src="src/assets/people.svg"
@@ -97,14 +100,23 @@ const SideNavbar: React.FC = () => {
         </div>
       </div>
 
-      <div className="w-full p-3 bg-[#393937] rounded-md flex items-center">
-        <div className="rounded-full bg-gray-500 text-white w-8 h-8 flex items-center justify-center">
-          S
-        </div>
+      {/* Adjusted Footer Section */}
+      <div
+        className={`w-full p-3 bg-[#393937] rounded-md flex items-center ${
+          isExpanded ? "justify-start" : "justify-center"
+        }`}
+      >
+        <CircleAvatar letter="S" />
         <span
-          className={`text-white ml-2 ${
-            isExpanded ? "opacity-100" : "opacity-0"
-          } transition-opacity duration-300 ease-in-out`}
+          className={`text-white ml-4 transition-all duration-300 ease-in-out ${
+            isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
+          }`}
+          style={{
+            maxWidth: isExpanded ? "140px" : "0", // Set a maximum width for the email
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
         >
           sowrabhmitoshi@gmail.com
         </span>
