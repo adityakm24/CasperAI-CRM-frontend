@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const NotFoundPage: React.FC = () => {
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-[#2671B7] text-black font-adlam animate-fadeIn">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-[#2671B7] text-white font-adlam animate-fadeIn">
             <img
                 src="src/assets/logo1.svg"
                 alt="CasperAI Logo"
@@ -19,14 +19,14 @@ const NotFoundPage: React.FC = () => {
             <div className="flex flex-row space-x-4 animate-fadeInFast">
                 <Link
                     to="/login"
-                    className="bg-black text-[#2671B7] px-6 py-3 rounded-lg hover:bg-[#EAF2F8] transition-colors duration-300 hover:scale-110"
+                    className="bg-white text-[#2671B7] px-6 py-3 rounded-lg hover:bg-[#EAF2F8] transition-colors duration-300 hover:scale-110"
                 >
                     Go to Login
                 </Link>
 
                 <Link
                     to="/dashboard"
-                    className="bg-black text-[#2671B7] px-6 py-3 rounded-lg hover:bg-[#EAF2F8] transition-colors duration-300 hover:scale-110"
+                    className="bg-white text-[#2671B7] px-6 py-3 rounded-lg hover:bg-[#EAF2F8] transition-colors duration-300 hover:scale-110"
                 >
                     Go to Home
                 </Link>

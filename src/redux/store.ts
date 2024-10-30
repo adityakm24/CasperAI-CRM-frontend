@@ -2,13 +2,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/redux/authSlice';
 import snackbarReducer from './snackbarSlice';
-import leadReducer from '../features/dashboard/redux/leadSlice'; // Import the dashboard leads reducer
+import leadReducer from '../features/dashboard/redux/leadSlice';
 
 const store = configureStore({
     reducer: {
-        auth: authReducer,           // Existing auth reducer
-        snackbar: snackbarReducer,   // Existing snackbar reducer
-        dashboardLeads: leadReducer, // Add dashboard leads reducer here
+        auth: authReducer,
+        snackbar: snackbarReducer, 
+        dashboardLeads: leadReducer,
     },
 });
 

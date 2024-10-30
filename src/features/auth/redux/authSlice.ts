@@ -13,15 +13,15 @@ export interface AuthState {
 
 const initialState: AuthState = {
     user: null,
-    accessToken: localStorage.getItem('accessToken'),  
+    accessToken: localStorage.getItem('accessToken'),
     loading: false,
     error: null,
-    otpVerified: false, 
+    otpVerified: false,
 };
 
 export const signupUser = createAsyncThunk<
-    AuthResponse, 
-    { firstName: string; lastName: string; email: string; password: string; phoneNumber1: string; countryCode: string }, 
+    AuthResponse,
+    { firstName: string; lastName: string; email: string; password: string; phoneNumber1: string; countryCode: string },
     { rejectValue: string }
 >(
     'auth/register',
@@ -43,7 +43,7 @@ export const loginUser = createAsyncThunk<AuthResponse, { email: string; passwor
             const response = await loginUserApi(loginData);
             return response;
         } catch (error: unknown) {
-            const { message } = handleApiError(error); 
+            const { message } = handleApiError(error);
             return rejectWithValue(message);
         }
     }
@@ -54,7 +54,7 @@ export const verifyOTP = createAsyncThunk<{ message: string, user: User }, { ema
     async ({ email, otp }, { rejectWithValue }) => {
         try {
             const response = await verifyOtpApi(email, otp);
-            return response; 
+            return response;
         } catch (error: unknown) {
             const { message } = handleApiError(error);
             return rejectWithValue(message);
@@ -69,13 +69,13 @@ const authSlice = createSlice({
     reducers: {
         setAccessToken(state, action) {
             state.accessToken = action.payload;
-            localStorage.setItem('accessToken', action.payload); 
+            localStorage.setItem('accessToken', action.payload);
         },
         logout(state) {
             state.user = null;
             state.accessToken = null;
             state.otpVerified = false;
-            localStorage.removeItem('accessToken'); 
+            localStorage.removeItem('accessToken');
         },
     },
     extraReducers: (builder) => {
@@ -88,10 +88,10 @@ const authSlice = createSlice({
             state.user = action.payload.user;
             state.accessToken = action.payload.accessToken;
             localStorage.setItem('accessToken', action.payload.accessToken);
-             console.log(
-               "Access token set in localStorage:",
-               action.payload.accessToken
-             );
+            console.log(
+                "Access token set in localStorage:",
+                action.payload.accessToken
+            );
         });
         builder.addCase(signupUser.rejected, (state, action) => {
             state.loading = false;
@@ -120,7 +120,7 @@ const authSlice = createSlice({
         builder.addCase(verifyOTP.fulfilled, (state, action) => {
             state.loading = false;
             state.otpVerified = true;
-            state.user = { ...state.user, ...action.payload.user }; 
+            state.user = { ...state.user, ...action.payload.user };
         });
         builder.addCase(verifyOTP.rejected, (state, action) => {
             state.loading = false;
