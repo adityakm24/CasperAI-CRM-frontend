@@ -30,6 +30,7 @@ const SideNavbar: React.FC = () => {
           style={{
             maxWidth: activeSection === "Dashboard" && isExpanded ? "200px" : "auto",
             height: activeSection === "Dashboard" && isExpanded ? "45px" : "auto",
+            borderRadius: activeSection === "Dashboard" && isExpanded ? "20px" : "0",
           }}
         >
           <div
@@ -71,6 +72,7 @@ const SideNavbar: React.FC = () => {
               style={{
                 maxWidth: activeSection === "Leads" && isExpanded ? "200px" : "auto",
                 height: activeSection === "Leads" && isExpanded ? "45px" : "auto",
+                borderRadius: activeSection === "Leads" && isExpanded ? "20px" : "0",
               }}
             >
               <div
@@ -105,6 +107,7 @@ const SideNavbar: React.FC = () => {
           style={{
             maxWidth: activeSection === "Assistants" && isExpanded ? "200px" : "auto",
             height: activeSection === "Assistants" && isExpanded ? "45px" : "auto",
+            borderRadius: activeSection === "Assistants" && isExpanded ? "20px" : "0",
           }}
         >
           <div
@@ -131,13 +134,19 @@ const SideNavbar: React.FC = () => {
       </div>
 
       <div
-        className={`w-full p-3 bg-[#393937] rounded-md flex items-center ${
-          isExpanded ? "justify-start" : "justify-center"
+        className={`p-3 rounded-md flex items-center mb-4 ml-2 font-adlam ${
+          isExpanded ? "justify-start ml-4 mb-4" : "justify-center"
         }`}
+        style={{
+          backgroundColor: isExpanded ? "#2C2C2C" : "transparent",
+          height: isExpanded ? "50px" : "auto",
+          maxWidth: isExpanded ? "210px" : "auto",
+          borderRadius: isExpanded ? "20px" : "0",  
+        }}
       >
         <CircleAvatar letter="S" />
         <span
-          className={`text-white ml-4 transition-all duration-500 ease-in-out ${
+          className={`text-white ml-4 transition-all duration-500 ease-in-out font-adlam ${
             isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
           }`}
           style={{
