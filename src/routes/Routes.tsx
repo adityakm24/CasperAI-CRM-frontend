@@ -1,10 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from '../features/auth/LoginPage';
 import DashboardPage from '../features/dashboard/dashboard';
+import LeadPage from '../features/dashboard/leads';
+import AssistantsPage from '../features/assistants/assistants';
 import SignupPage from '../features/auth/SignupPage';
 import ProtectedRoute from '../features/auth/components/ProtectedRoute';
 import OTPPage from '../features/auth/OTPPage';
 import NotFoundPage from '../components/NotFound';
+
 
 const AppRoutes = () => {
     return (
@@ -24,6 +27,24 @@ const AppRoutes = () => {
                     element={
                         <ProtectedRoute>
                             <DashboardPage />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/leads"
+                    element={
+                        <ProtectedRoute>
+                            <LeadPage />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/assistants"
+                    element={
+                        <ProtectedRoute>
+                            <AssistantsPage />
                         </ProtectedRoute>
                     }
                 />

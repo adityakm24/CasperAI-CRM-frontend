@@ -1,38 +1,48 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../../../redux/store';
+import { setAccessToken, logout } from '../redux/authSlice';
 
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const dispatch = useDispatch<AppDispatch>();
+    const { isAuthenticated } = useSelector((state: RootState) => state.auth);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const checkAuth = async () => {
-            const accessToken = localStorage.getItem('accessToken');
-            console.log("Access Token:",accessToken);
-            if (accessToken) {
-                setIsAuthenticated(true);
+            if (isAuthenticated) {
+                setLoading(false);
+                return;
+            }
+
+            const storedAccessToken = localStorage.getItem('accessToken');
+            if (storedAccessToken) {
+                dispatch(setAccessToken(storedAccessToken));
                 setLoading(false);
                 return;
             }
 
             try {
-                const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/verify-token`, { withCredentials: true });
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/verify-token`, {
+                    withCredentials: true,
+                });
+
                 if (response.data.success) {
-                    setIsAuthenticated(true);
+                    dispatch(setAccessToken(''));
                 } else {
-                    setIsAuthenticated(false);
+                    dispatch(logout());
                 }
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            } catch (error) {
-                setIsAuthenticated(false);
+            } catch {
+                dispatch(logout());
             } finally {
                 setLoading(false);
             }
         };
 
         checkAuth();
-    }, []);
+    }, [dispatch, isAuthenticated]);
 
     if (loading) {
         return <div>Loading...</div>;

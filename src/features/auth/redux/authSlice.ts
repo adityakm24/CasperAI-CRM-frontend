@@ -9,6 +9,7 @@ export interface AuthState {
     loading: boolean;
     error: string | null;
     otpVerified: boolean;
+    isAuthenticated: boolean;
 }
 
 const initialState: AuthState = {
@@ -17,6 +18,7 @@ const initialState: AuthState = {
     loading: false,
     error: null,
     otpVerified: false,
+    isAuthenticated: false,
 };
 
 export const signupUser = createAsyncThunk<
@@ -27,8 +29,8 @@ export const signupUser = createAsyncThunk<
     'auth/register',
     async (signupData, { rejectWithValue }) => {
         try {
-            const response = await signupUserApi(signupData);
-            return response;
+            const authResponse = await signupUserApi(signupData);
+            return authResponse;
         } catch (error: unknown) {
             const { message } = handleApiError(error);
             return rejectWithValue(message);
@@ -36,12 +38,16 @@ export const signupUser = createAsyncThunk<
     }
 );
 
-export const loginUser = createAsyncThunk<AuthResponse, { email: string; password: string }, { rejectValue: string }>(
+export const loginUser = createAsyncThunk<
+    AuthResponse,
+    { email: string; password: string },
+    { rejectValue: string }
+>(
     'auth/login',
     async (loginData, { rejectWithValue }) => {
         try {
-            const response = await loginUserApi(loginData);
-            return response;
+            const authResponse = await loginUserApi(loginData);
+            return authResponse;
         } catch (error: unknown) {
             const { message } = handleApiError(error);
             return rejectWithValue(message);
@@ -49,12 +55,16 @@ export const loginUser = createAsyncThunk<AuthResponse, { email: string; passwor
     }
 );
 
-export const verifyOTP = createAsyncThunk<{ message: string, user: User }, { email: string, otp: string }, { rejectValue: string }>(
+export const verifyOTP = createAsyncThunk<
+    { message: string; user: User },
+    { email: string; otp: string },
+    { rejectValue: string }
+>(
     'auth/verifyOTP',
     async ({ email, otp }, { rejectWithValue }) => {
         try {
             const response = await verifyOtpApi(email, otp);
-            return response;
+            return response; 
         } catch (error: unknown) {
             const { message } = handleApiError(error);
             return rejectWithValue(message);
@@ -70,11 +80,13 @@ const authSlice = createSlice({
         setAccessToken(state, action) {
             state.accessToken = action.payload;
             localStorage.setItem('accessToken', action.payload);
+            state.isAuthenticated = true;
         },
         logout(state) {
             state.user = null;
             state.accessToken = null;
             state.otpVerified = false;
+            state.isAuthenticated = false;
             localStorage.removeItem('accessToken');
         },
     },
@@ -85,13 +97,14 @@ const authSlice = createSlice({
         });
         builder.addCase(signupUser.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload.user;
+            state.user = {
+                email: action.payload.email,
+                isEmailVerified: action.payload.isEmailVerified,
+                firstName: action.payload.firstName,
+                lastName: action.payload.lastName,
+            };
             state.accessToken = action.payload.accessToken;
             localStorage.setItem('accessToken', action.payload.accessToken);
-            console.log(
-                "Access token set in localStorage:",
-                action.payload.accessToken
-            );
         });
         builder.addCase(signupUser.rejected, (state, action) => {
             state.loading = false;
@@ -104,7 +117,12 @@ const authSlice = createSlice({
         });
         builder.addCase(loginUser.fulfilled, (state, action) => {
             state.loading = false;
-            state.user = action.payload.user;
+            state.user = {
+                email: action.payload.email,
+                isEmailVerified: action.payload.isEmailVerified,
+                firstName: action.payload.firstName,
+                lastName: action.payload.lastName,
+            };
             state.accessToken = action.payload.accessToken;
             localStorage.setItem('accessToken', action.payload.accessToken);
         });

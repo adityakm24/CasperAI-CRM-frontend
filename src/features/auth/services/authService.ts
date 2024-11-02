@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { handleApiError } from '../../../utils/errorHandler';
-import { User, AuthResponse } from '../types';
+import { User, AuthResponse, ApiResponse } from '../types';
 
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
@@ -17,11 +17,10 @@ interface SignupData {
 
 export const signupUserApi = async (signupData: SignupData): Promise<AuthResponse> => {
     try {
-        console.log('Sending signup data:', signupData);
-        const response = await axios.post<AuthResponse>(`${VITE_API_URL}/auth/register`, signupData, {
+        const response: AxiosResponse<ApiResponse<AuthResponse>> = await axios.post(`${VITE_API_URL}/auth/register`, signupData, {
             withCredentials: true,
         });
-        return response.data;
+        return response.data.data;
     } catch (error: unknown) {
         console.error('Error during signup:', error);
         throw handleApiError(error);
@@ -30,10 +29,10 @@ export const signupUserApi = async (signupData: SignupData): Promise<AuthRespons
 
 export const loginUserApi = async (loginData: { email: string; password: string }): Promise<AuthResponse> => {
     try {
-        const response = await axios.post<AuthResponse>(`${VITE_API_URL}/auth/login`, loginData, {
+        const response: AxiosResponse<ApiResponse<AuthResponse>> = await axios.post(`${VITE_API_URL}/auth/login`, loginData, {
             withCredentials: true,
         });
-        return response.data;
+        return response.data.data;
     } catch (error: unknown) {
         throw handleApiError(error);
     }
